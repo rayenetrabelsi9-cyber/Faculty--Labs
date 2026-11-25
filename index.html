@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Big Data · Hadoop, Spark, Hive, MongoDB, Cassandra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#070B1A;--bg2:#0E1530;--panel:#111A3A;--ink:#E8EEFF;--muted:#93A0C4;--line:#22305F;--cy:#22D3EE;--vi:#8B5CF6;
+--mongo:#19A35A;--hadoop:#EAB308;--spark:#F26B21;--hive:#3B82F6;--cass:#A78BFA}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:Sora,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+a{color:inherit}
+.hero{position:relative;overflow:hidden;padding:0 24px 80px;background:radial-gradient(900px 500px at 85% 30%,#1B2A66,transparent 70%),radial-gradient(700px 400px at 0% 100%,#3B1D7A55,transparent 70%),var(--bg)}
+#net{position:absolute;inset:0;width:100%;height:100%;opacity:.55}
+.in{position:relative;max-width:1180px;margin:0 auto}
+.bar{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:22px 0;font-size:.9rem;color:var(--muted)}
+.bar b{color:var(--ink)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:44px;align-items:center;margin-top:18px}
+.badge{display:inline-block;font:500 .78rem "JetBrains Mono",monospace;color:var(--cy);border:1px solid #22D3EE55;background:#22D3EE14;padding:5px 12px;border-radius:99px}
+h1{margin-top:16px;font-size:clamp(2.3rem,4.6vw,3.6rem);font-weight:800;line-height:1.05;letter-spacing:-.03em}
+h1 span{background:linear-gradient(90deg,var(--cy),var(--vi),#F472B6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{margin-top:18px;color:#B6C2E4;max-width:48ch}
+.cta{display:inline-block;margin-top:26px;padding:14px 26px;border-radius:12px;font-weight:800;text-decoration:none;color:#06101F;background:linear-gradient(90deg,var(--cy),#7DD3FC);box-shadow:0 0 30px #22D3EE55;transition:transform .15s}
+.cta:hover{transform:translateY(-2px)}
+.stats{display:flex;gap:28px;margin-top:34px;flex-wrap:wrap}
+.stats b{display:block;font-size:2rem;font-weight:800;color:#fff}
+.stats small{color:var(--muted)}
+.glass{background:#ffffff0a;border:1px solid #ffffff22;border-radius:20px;padding:14px;backdrop-filter:blur(6px)}
+.glass svg{width:100%;height:auto;display:block}
+.hint{color:var(--muted);font-size:.82rem;margin:6px 6px 0}
+section{max-width:1180px;margin:0 auto;padding:70px 24px 10px}
+h2{font-size:2rem;font-weight:800;letter-spacing:-.02em}
+.sub{color:var(--muted);margin:6px 0 30px;max-width:62ch}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;counter-reset:s}
+.step{position:relative;background:linear-gradient(160deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:16px;padding:20px;counter-increment:s}
+.step::before{content:"0" counter(s);font:500 .8rem "JetBrains Mono",monospace;color:var(--cy)}
+.step svg{width:54px;height:54px;margin:8px 0;color:var(--c)}
+.step h3{font-size:1.05rem}.step p{color:var(--muted);font-size:.9rem;margin-top:4px}
+.step:not(:last-child)::after{content:"→";position:absolute;right:-16px;top:50%;color:var(--cy);font-size:1.4rem;z-index:2}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.f{font:inherit;font-weight:600;font-size:.9rem;padding:9px 18px;border-radius:99px;border:1px solid var(--line);background:var(--panel);color:var(--muted);cursor:pointer}
+.f[aria-pressed=true]{background:var(--cy);color:#06101F;border-color:var(--cy)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:24px}
+.card{display:flex;flex-direction:column;background:linear-gradient(160deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:transform .2s,box-shadow .2s,border-color .2s}
+.card:hover{transform:translateY(-6px);border-color:var(--c);box-shadow:0 14px 40px color-mix(in srgb,var(--c) 30%,transparent)}
+.card[hidden]{display:none}
+.scene{color:var(--c);background:radial-gradient(circle at 50% 120%,color-mix(in srgb,var(--c) 28%,transparent),transparent 70%);border-bottom:1px solid var(--line)}
+.scene svg{width:100%;height:auto;display:block;padding:8px 14px}
+.flow{stroke-dasharray:6 6;animation:dash 1.2s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-12}}
+.body{padding:20px 22px 22px;display:flex;flex:1;flex-direction:column}
+.tag{font:500 .78rem "JetBrains Mono",monospace;color:var(--c);border:1px solid var(--c);padding:2px 9px;border-radius:99px}
+.body h3{font-size:1.2rem;margin-top:10px}
+.body p{color:var(--muted);font-size:.93rem;margin:8px 0 14px;flex:1}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.chips code{font:500 .72rem "JetBrains Mono",monospace;background:#0006;border:1px solid var(--line);padding:3px 8px;border-radius:6px;color:#C9D4F5}
+.btn{display:inline-block;font-weight:800;font-size:.92rem;text-decoration:none;padding:11px 18px;border-radius:10px;background:var(--c);color:#06101F;align-self:flex-start}
+.btn:hover{filter:brightness(1.12)}
+.btn:focus-visible,.cta:focus-visible,.f:focus-visible{outline:3px solid var(--cy);outline-offset:3px}
+.btn.off{pointer-events:none;opacity:.45;background:transparent;border:1.5px dashed var(--muted);color:var(--muted)}
+footer{max-width:1180px;margin:60px auto 0;padding:28px 24px 50px;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.step::after{display:none}}
+@media(prefers-reduced-motion:reduce){.flow{animation:none}.cta,.card{transition:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="db" viewBox="0 0 48 48"><ellipse cx="24" cy="10" rx="16" ry="6" fill="currentColor"/><path d="M8 10v10c0 3.3 7 6 16 6s16-2.7 16-6V10c0 3.3-7 6-16 6S8 13.3 8 10z" fill="currentColor" opacity=".8"/><path d="M8 24v10c0 3.3 7 6 16 6s16-2.7 16-6V24c0 3.3-7 6-16 6S8 27.3 8 24z" fill="currentColor" opacity=".6"/></symbol>
+  <symbol id="srv" viewBox="0 0 48 48"><rect x="8" y="5" width="32" height="12" rx="3" fill="currentColor"/><rect x="8" y="19" width="32" height="12" rx="3" fill="currentColor"/><rect x="8" y="33" width="32" height="10" rx="3" fill="currentColor"/><circle cx="14" cy="11" r="2" fill="#fff"/><circle cx="14" cy="25" r="2" fill="#fff"/><circle cx="14" cy="38" r="2" fill="#fff"/></symbol>
+  <symbol id="bolt" viewBox="0 0 48 48"><path d="M27 3L9 27h13l-3 18 20-26H26z" fill="currentColor"/></symbol>
+  <symbol id="hex" viewBox="0 0 48 48"><path d="M24 3l17 10v22L24 45 7 35V13z" fill="currentColor"/></symbol>
+  <symbol id="doc" viewBox="0 0 48 48"><rect x="9" y="4" width="30" height="40" rx="4" fill="currentColor"/><path d="M16 16h16M16 24h16M16 32h10" stroke="#fff" stroke-width="3" stroke-linecap="round"/></symbol>
+  <symbol id="bars" viewBox="0 0 48 48"><rect x="6" y="26" width="8" height="16" rx="2" fill="currentColor"/><rect x="20" y="14" width="8" height="28" rx="2" fill="currentColor"/><rect x="34" y="5" width="8" height="37" rx="2" fill="currentColor"/></symbol>
+</svg>
+
+<header class="hero">
+  <canvas id="net" aria-hidden="true"></canvas>
+  <div class="in">
+    <div class="bar"><span><b>Travaux pratiques Big Data</b> · NoSQL &amp; calcul distribué</span><span id="who"></span></div>
+    <div class="hero-grid">
+      <div>
+        <span class="badge">&gt; hdfs · spark · hive · mongodb · cassandra</span>
+        <h1>Du stockage distribué à l’<span>analyse à grande échelle</span></h1>
+        <p class="lead">Mes TP d’installation, d’importation et d’interrogation de données avec MongoDB, Cassandra, Hadoop, Spark et Hive. Chaque compte rendu s’ouvre en PDF.</p>
+        <a class="cta" href="#tp">Voir les TP</a>
+        <div class="stats">
+          <div><b data-n="5">0</b><small>comptes rendus</small></div>
+          <div><b data-n="5">0</b><small>technologies</small></div>
+          <div><b data-n="2">0</b><small>familles : NoSQL et Hadoop</small></div>
+        </div>
+      </div>
+      <div class="glass">
+        <svg viewBox="0 0 640 330" role="img" aria-label="Pipeline Big Data : sources, stockage HDFS, traitement Spark, bases NoSQL, analyse">
+          <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#22D3EE"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs>
+          <g stroke="url(#g)" stroke-width="2.5" fill="none" opacity=".8">
+            <path id="p1" d="M95 80C150 80 150 165 205 165M95 165H205M95 250C150 250 150 165 205 165"/>
+            <path id="p2" d="M285 165H355"/>
+            <path id="p3" d="M435 165C480 165 480 90 525 90M435 165C480 165 480 240 525 240"/>
+          </g>
+          <use href="#doc" x="55" y="55" width="40" height="50" style="color:#7DD3FC"/>
+          <use href="#doc" x="55" y="140" width="40" height="50" style="color:#7DD3FC"/>
+          <use href="#doc" x="55" y="225" width="40" height="50" style="color:#7DD3FC"/>
+          <text x="75" y="305" text-anchor="middle" fill="#93A0C4" font-size="13">Sources</text>
+          <g style="color:#EAB308"><use href="#srv" x="200" y="100" width="50" height="50"/><use href="#srv" x="240" y="140" width="50" height="50"/><use href="#srv" x="200" y="180" width="50" height="50"/></g>
+          <text x="245" y="260" text-anchor="middle" fill="#F5D060" font-size="13" font-weight="600">HDFS</text>
+          <circle cx="395" cy="165" r="46" fill="#F26B2122" stroke="#F26B21" stroke-width="2"/>
+          <use href="#bolt" x="371" y="141" width="48" height="48" style="color:#F26B21"/>
+          <text x="395" y="235" text-anchor="middle" fill="#FDA574" font-size="13" font-weight="600">Spark</text>
+          <use href="#db" x="525" y="60" width="56" height="56" style="color:#19A35A"/>
+          <text x="553" y="134" text-anchor="middle" fill="#6EE7A8" font-size="12" font-weight="600">MongoDB</text>
+          <use href="#hex" x="525" y="210" width="52" height="52" style="color:#3B82F6"/>
+          <text x="551" y="242" text-anchor="middle" fill="#fff" font-size="12" font-weight="800">SQL</text>
+          <text x="551" y="282" text-anchor="middle" fill="#93C5FD" font-size="12" font-weight="600">Hive</text>
+          <circle r="5" fill="#fff"><animateMotion dur="2.6s" repeatCount="indefinite" path="M95 80C150 80 150 165 205 165"/></circle>
+          <circle r="5" fill="#fff"><animateMotion dur="2.6s" begin="-.9s" repeatCount="indefinite" path="M95 250C150 250 150 165 205 165"/></circle>
+          <circle r="5" fill="#fff"><animateMotion dur="1.6s" repeatCount="indefinite" path="M285 165H355"/></circle>
+          <circle r="5" fill="#fff"><animateMotion dur="2.2s" repeatCount="indefinite" path="M435 165C480 165 480 90 525 90"/></circle>
+          <circle r="5" fill="#fff"><animateMotion dur="2.2s" begin="-1s" repeatCount="indefinite" path="M435 165C480 165 480 240 525 240"/></circle>
+        </svg>
+        <p class="hint">Le flux de données traverse le pipeline, des sources jusqu’à l’analyse.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="pipe">
+  <h2>Le cycle d’un projet Big Data</h2>
+  <p class="sub">Les cinq TP couvrent chaque étape : installer, stocker, répartir, traiter et interroger.</p>
+  <div class="steps">
+    <div class="step" style="--c:#22D3EE"><svg viewBox="0 0 48 48"><use href="#doc"/></svg><h3>Collecte</h3><p>Fichiers CSV et JSON importés dans la base.</p></div>
+    <div class="step" style="--c:#EAB308"><svg viewBox="0 0 48 48"><use href="#srv"/></svg><h3>Stockage</h3><p>HDFS, MongoDB et Cassandra répartissent les données.</p></div>
+    <div class="step" style="--c:#F26B21"><svg viewBox="0 0 48 48"><use href="#bolt"/></svg><h3>Traitement</h3><p>Calcul distribué avec Spark sur le cluster.</p></div>
+    <div class="step" style="--c:#3B82F6"><svg viewBox="0 0 48 48"><use href="#bars"/></svg><h3>Analyse</h3><p>Requêtes HiveQL et MongoDB pour extraire les résultats.</p></div>
+  </div>
+</section>
+
+<section id="tp">
+  <h2>Les travaux pratiques</h2>
+  <p class="sub">Choisissez une famille ou parcourez tous les comptes rendus.</p>
+  <div class="filters" role="group" aria-label="Filtrer les TP">
+    <button class="f" data-f="all" aria-pressed="true">Tous</button>
+    <button class="f" data-f="nosql" aria-pressed="false">NoSQL</button>
+    <button class="f" data-f="hadoop" aria-pressed="false">Hadoop &amp; Spark</button>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<footer id="foot"></footer>
+
+<script>
+/* ===== À MODIFIER ===== */
+const AUTHOR = "Mohamed Rayene Trabelsi · RSI31 · ISET Nabeul";
+const LABS = [
+  {file:"INSTALL MONGOB.pdf", tag:"TP1", name:"Installation de MongoDB", sub:"Installation et configuration de MongoDB, lancement du serveur et premiers tests avec le shell.", chips:["mongod","mongosh"], c:"--mongo", cat:"nosql", s:"install"},
+  {file:"TP2 IMPORTATION DE BASE ET REQUETES SOUS MONGODB.pdf", tag:"TP2", name:"Importation et requêtes sous MongoDB", sub:"Importation d’une base de données dans MongoDB puis interrogation avec des requêtes de sélection et d’agrégation.", chips:["mongoimport","db.collection.find()"], c:"--mongo", cat:"nosql", s:"mongo"},
+  {file:"Replication & Sharding sous MONGODB Cassandra.pdf", tag:"TP3", name:"Réplication et sharding : MongoDB et Cassandra", sub:"Réplication pour la haute disponibilité et sharding pour répartir les données sur plusieurs nœuds, avec MongoDB puis Cassandra.", chips:["rs.initiate()","sh.shardCollection()","nodetool"], c:"--cass", cat:"nosql", s:"shard"},
+  {file:"Spark_Hadoop.pdf", tag:"TP4", name:"Spark et Hadoop", sub:"Cluster Hadoop avec HDFS, puis traitement distribué des données avec Spark.", chips:["hdfs dfs -put","spark-submit"], c:"--spark", cat:"hadoop", s:"spark"},
+  {file:"Hadoop_Spark_Hive.pdf", tag:"TP5", name:"Hadoop, Spark et Hive", sub:"Ensemble de l’écosystème : stockage HDFS, traitement Spark et requêtes SQL avec Hive.", chips:["hive","HiveQL","pyspark"], c:"--hive", cat:"hadoop", s:"hive"}
+];
+/* ====================== */
+document.getElementById("who").innerHTML="<b>"+AUTHOR+"</b>";
+document.getElementById("foot").textContent=AUTHOR+" · Travaux pratiques Big Data";
+
+const I=(id,x,y,w,h)=>`<use href="#${id}" x="${x}" y="${y}" width="${w}" height="${h||w}"/>`;
+const L=(a,b,c,d)=>`<line class="flow" x1="${a}" y1="${b}" x2="${c}" y2="${d}" stroke="currentColor" stroke-width="2.5" opacity=".6"/>`;
+const T=(x,y,t,f)=>`<text x="${x}" y="${y}" text-anchor="middle" fill="#fff" font-size="${f||12}" font-weight="800">${t}</text>`;
+const S={
+ install:L(60,60,120,60)+I("doc",14,32,44,50)+I("db",120,32,56)+I("bolt",186,36,36)+T(148,98,"MongoDB",10),
+ mongo:L(52,30,110,60)+L(52,60,110,60)+L(52,90,110,60)+I("doc",22,12,26,30)+I("doc",22,42,26,30)+I("doc",22,72,26,30)+I("db",108,32,56)+I("bars",178,34,48),
+ shard:L(120,30,50,82)+L(120,30,120,82)+L(120,30,190,82)+I("srv",94,6,52,44)+I("db",24,70,48,40)+I("db",96,70,48,40)+I("db",166,70,48,40)+T(120,24,"mongos",9),
+ spark:L(56,60,120,60)+L(120,60,186,60)+I("srv",8,20,46)+I("srv",8,58,46)+I("srv",94,36,48)+I("bolt",176,34,52)+T(118,106,"HDFS → Spark",11),
+ hive:L(50,60,95,60)+L(145,60,190,60)+I("srv",6,34,46)+I("bolt",96,34,48)+I("hex",178,30,56)+T(206,64,"SQL",12)
+};
+const grid=document.getElementById("grid");
+LABS.forEach(l=>{
+  const u=encodeURI(l.file);
+  const el=document.createElement("article");
+  el.className="card"; el.dataset.cat=l.cat; el.style.setProperty("--c","var("+l.c+")");
+  el.innerHTML='<div class="scene"><svg viewBox="0 0 240 120" aria-hidden="true">'+S[l.s]+'</svg></div>'+
+   '<div class="body"><span class="tag">'+l.tag+'</span><h3>'+l.name+'</h3><p>'+l.sub+'</p>'+
+   '<div class="chips">'+l.chips.map(x=>"<code>"+x+"</code>").join("")+'</div>'+
+   '<a class="btn" data-u="'+u+'" href="'+u+'" target="_blank" rel="noopener">Ouvrir le compte rendu (PDF)</a></div>';
+  grid.appendChild(el);
+});
+
+document.querySelectorAll(".f").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".f").forEach(x=>x.setAttribute("aria-pressed",x===b));
+  document.querySelectorAll(".card").forEach(c=>c.hidden=!(b.dataset.f==="all"||c.dataset.cat===b.dataset.f));
+}));
+
+if(location.protocol.startsWith("http")){
+  document.querySelectorAll(".btn[data-u]").forEach(a=>{
+    fetch(a.dataset.u,{method:"HEAD"}).then(r=>{if(!r.ok){a.classList.add("off");a.title="Fichier introuvable : "+decodeURI(a.dataset.u);a.removeAttribute("href")}}).catch(()=>{});
+  });
+}
+
+const calm=matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.querySelectorAll("[data-n]").forEach(e=>{
+  const n=+e.dataset.n; if(calm){e.textContent=n;return}
+  let k=0;const t=setInterval(()=>{e.textContent=++k;if(k>=n)clearInterval(t)},180);
+});
+if(calm){document.querySelectorAll("animateMotion").forEach(a=>a.parentNode.remove())}
+
+/* réseau de points animé */
+(function(){
+  const c=document.getElementById("net"),x=c.getContext("2d");let w,h,P=[];
+  function size(){w=c.width=c.offsetWidth;h=c.height=c.offsetHeight;P=Array.from({length:Math.round(w/22)},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4}))}
+  function draw(){
+    x.clearRect(0,0,w,h);
+    P.forEach(p=>{if(!calm){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1}
+      x.fillStyle="#22D3EE";x.beginPath();x.arc(p.x,p.y,1.8,0,7);x.fill()});
+    for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++){
+      const d=Math.hypot(P[i].x-P[j].x,P[i].y-P[j].y);
+      if(d<110){x.strokeStyle="rgba(139,92,246,"+(1-d/110)*.5+")";x.beginPath();x.moveTo(P[i].x,P[i].y);x.lineTo(P[j].x,P[j].y);x.stroke()}}
+    if(!calm)requestAnimationFrame(draw)
+  }
+  size();draw();addEventListener("resize",()=>{size();if(calm)draw()});
+})();
+</script>
+</body>
+</html>
